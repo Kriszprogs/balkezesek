@@ -67,7 +67,84 @@ namespace Balkezesek
             {
                 Console.WriteLine("Hibás adat");
             }
-            
+            Console.WriteLine("\n4.feladat");
+            // 4.feladat
+            int evszam;
+            do
+            {
+                Console.WriteLine("Adjon meg egy évszámot 1900 és 1999 között");
+                evszam = int.Parse(Console.ReadLine());
+            } while (1900 > evszam || evszam > 1999);
+
+            foreach (var item in balkezeseklista)
+            {
+                if(item.elso.Year == evszam)
+                {
+                    Console.WriteLine($"{item.nev} {item.elso.Year}-{item.elso.Month}-{item.elso.Day} {item.utolso.Year}-{item.utolso.Month}-{item.utolso.Day} {item.magassag} inch {item.suly} pound");
+                }
+
+            }
+            Console.WriteLine("\n5.feladat");
+            // 5. feladat
+            var legkorábbi = balkezeseklista.Min(v => v.elso.Year);
+            Console.WriteLine($"A legkorábbi év:{legkorábbi}");
+            Console.WriteLine("\n6.feladat");
+            // 6. feladat
+            bool kesobb = false;
+
+            foreach (var item in balkezeseklista)
+            {
+                if (item.utolso.Year >= 2000 && !kesobb)
+                {
+                    kesobb = true;
+                    break;
+                }
+            }
+            if (!kesobb)
+            {
+                Console.WriteLine("Mindenki 2000 előtt lépett pályára");
+            }
+            else
+            {
+                Console.WriteLine("Nem mindenki 2000 előtt lépett pályára");
+            }
+            Console.WriteLine("\n7.feladat");
+            //7. feladat
+            List<string> John = new List<string>();
+            foreach (var item in balkezeseklista)
+            {
+                if (item.nev.Contains("John"))
+                {
+                    John.Add(item.nev);
+                }
+            }
+            Console.WriteLine($"{John.Count} darab John nevű versenyző van");
+            foreach (var nev in John)
+            {
+                Console.WriteLine(nev);
+            }
+            Console.WriteLine("\n8.feladat");
+            //8.feladat
+            List<string> keresettNevek = new List<string> { "Joe", "John", "Jim", "Jack" };
+            //string[] nevek = { };
+            var nevek = balkezeseklista.GroupBy(v => v.nev.Split(' ')[0]);
+
+            FileStream fs = new FileStream("kernevek.txt", FileMode.OpenOrCreate);
+            StreamWriter iro = new StreamWriter(fs);
+
+            foreach (var nev in nevek)
+            {
+                if (keresettNevek.Contains(nev.Key))
+                {
+                    Console.WriteLine($"{nev.Key} {nev.Count()}");
+                    iro.WriteLine($"{nev.Key} {nev.Count()}");
+                }
+                
+            }
+            iro.Close();
+            fs.Close();
+                
+
             Console.ReadLine();
         }
     }
