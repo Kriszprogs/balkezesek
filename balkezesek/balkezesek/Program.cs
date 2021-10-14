@@ -34,36 +34,40 @@ namespace Balkezesek
             Console.WriteLine($"1. Feladat:{balkezeseklista.Count} versenyzőről van adatunk.");
             //2.feladat: kik azok a versenyzők, akik 1980-ban léptek először pályára?
             Console.WriteLine("2. feladat:");
+            List<Adatok> nyolcvan = new List<Adatok>();
             DateTime start = new DateTime(1980, 01, 01);
             DateTime end = new DateTime(1980, 12, 31);
 
-            foreach (var balkezesek in balkezeseklista)
+            foreach (var item in balkezeseklista)
 
-                if (balkezesek.elso >= start && balkezesek.elso <= end)
+                if (item.elso.Year == 1980)
+                {
+                    Console.WriteLine(item.nev);
+                    nyolcvan.Add(item);
+                }
+                    //(balkezesek.elso >= start && balkezesek.elso <= end)
                    
-                    Console.WriteLine(balkezesek.nev);
+                    //Console.WriteLine(balkezesek.nev);
                    
                 
 
             //3.feladat: kérjünk be egy nevet
             Console.WriteLine("3. feladat");
             Console.Write("Adjon meg egy nevet:");
-            string a = Convert.ToString(Console.ReadLine());
+            string a = Console.ReadLine();
 
-            //string keresett = ;
-            int c = 0;
-            foreach (var nevek in balkezeseklista)
-            //while(a != nevek.nev )
-                 if (a == sorok[0])
-                 
-                     Console.Write("van");
-                 
-                 else
-                 
-                     Console.Write("hibás adat");
-                 
-                
-                Console.WriteLine(a);
+            int index = nyolcvan.FindIndex(v => v.nev == a);
+
+            if (index >= 0)
+            {
+                double magassag = Convert.ToDouble(nyolcvan[index].magassag * 2.54);
+                Console.WriteLine($"{Math.Round(magassag, 1)} cm");
+            }
+            else
+            {
+                Console.WriteLine("Hibás adat");
+            }
+            
             Console.ReadLine();
         }
     }
